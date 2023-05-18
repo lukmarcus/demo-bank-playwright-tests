@@ -11,6 +11,7 @@ test.describe("Desktop", () => {
     const transferAmount = "120";
     const transferTitle = "Zwrot środków";
     const expectedTransferReceiver = "Chuck Demobankowy";
+    const transferMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
 
     //Act
     await page.goto(url);
@@ -25,25 +26,32 @@ test.describe("Desktop", () => {
     await page.getByTestId("close-button").click();
 
     //Assert
-    await expect(page.getByTestId("message-text")).toHaveText(
-      `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`
-    );
+    await expect(page.getByTestId("message-text")).toHaveText(transferMessage);
   });
 
   test("successfull mobile top-up", async ({ page }) => {
-    await page.goto("https://demo-bank.vercel.app/");
-    await page.getByTestId("login-input").fill("user1234");
-    await page.getByTestId("password-input").fill("password");
+    //Arrange
+    const url = "https://demo-bank.vercel.app/";
+    const userId = "user1234";
+    const userPassword = "password";
+
+    const topupReceiver = "500 xxx xxx";
+    const topupAmount = "120";
+    const topupMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
+
+    //Act
+    await page.goto(url);
+    await page.getByTestId("login-input").fill(userId);
+    await page.getByTestId("password-input").fill(userPassword);
     await page.getByTestId("login-button").click();
 
-    await page.locator("#widget_1_topup_receiver").selectOption("500 xxx xxx");
-    await page.locator("#widget_1_topup_amount").fill("50");
+    await page.locator("#widget_1_topup_receiver").selectOption(topupReceiver);
+    await page.locator("#widget_1_topup_amount").fill(topupAmount);
     await page.locator("#uniform-widget_1_topup_agreement").check();
     await page.locator("#execute_phone_btn").click();
     await page.getByTestId("close-button").click();
 
-    await expect(page.getByTestId("message-text")).toHaveText(
-      "Doładowanie wykonane! 50,00PLN na numer 500 xxx xxx"
-    );
+    //Assert
+    await expect(page.getByTestId("message-text")).toHaveText(topupMessage);
   });
 });
