@@ -21,15 +21,58 @@
   `npx playwright test --headed`
 - view report  
   `npx playwright show-report`
+- run Trace Viewer on zip file  
+  `npx playwright show-trace trace.zip`
+- run tests form exact file  
+  `npx playwright test tests/login.spec.ts`
 
-## Playwright snippets
+### Playwright Config modifications
 
-- test:
+- config file `playwright.config.ts`
+- disable browsers, i.e. Firefox
   ```javascript
-  test("test description", async ({ page }) => {});
+  // {
+  //   name: 'firefox',
+  //   use: {
+  //     ...devices['Desktop Firefox'],
+  //   },
+  // },
+  ```
+- enable video on fail
+  ```javascript
+  use: {
+      video: {'retain-on-failure'},
+  },
+  ```
+- enable Trace Viewer on fial
+  ```javascript
+  use: {
+      trace: {'retain-on-failure'},
+  },
+  ```
+
+### Playwright snippets
+
+- import:
+  ```typescript
+  import { test, expect } from "@playwright/test";
+  ```
+- test:
+  ```typescript
+  test("test description", async ({ page }) => {
+    //your code
+  });
   ```
 - describe:
-
-  ```javascript
-  test.describe("Group description", () => {});
+  ```typescript
+  test.describe("Group description", () => {
+    //your code
+  });
   ```
+- hook beforeEach:
+  ```typescript
+  test.beforeEach(async ({ page }) => {
+    //your code
+  });
+  ```
+- running given test: `test.only`
