@@ -1,7 +1,10 @@
 import { Page } from "@playwright/test";
+import { SideMenuComponent } from "../components/sideMenu.component";
 
 export class DesktopPage {
   constructor(private page: Page) {}
+
+  sideMenu = new SideMenuComponent(this.page)
 
   userName = this.page.getByTestId("user-name");
 
@@ -20,6 +23,4 @@ export class DesktopPage {
   messageText = this.page.getByTestId("message-text");
 
   moneyValue = this.page.locator("#money_value");
-
-  paymentsButton = this.page.locator("#payments_btn");
 }

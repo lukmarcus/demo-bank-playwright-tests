@@ -16,7 +16,7 @@ test.describe("Demobank Payment", () => {
     await loginPage.loginButton.click()
 
     const desktopPage = new DesktopPage(page)
-    await desktopPage.paymentsButton.click();
+    await desktopPage.sideMenu.paymentsButton.click();
   });
 
   test("simple payment", async ({ page }) => {
