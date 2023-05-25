@@ -29,11 +29,12 @@ test.describe("Demobank user login page", () => {
     const expectedTooShortUserIdMessage = "identyfikator ma min. 8 znaków";
 
     //Act
-    await page.getByTestId("login-input").fill(tooShortId);
-    await page.getByTestId("login-input").blur();
+    const loginPage = new LoginPage(page);
+    await loginPage.loginInput.fill(tooShortId);
+    await loginPage.loginInput.blur();
 
     //Assert
-    await expect(page.getByTestId("error-login-id")).toHaveText(
+    await expect(loginPage.loginError).toHaveText(
       expectedTooShortUserIdMessage
     );
   });
@@ -44,11 +45,12 @@ test.describe("Demobank user login page", () => {
     const expectedTooShortPasswordMessage = "hasło ma min. 8 znaków";
 
     //Act
-    await page.getByTestId("password-input").fill(tooShortPassword);
-    await page.getByTestId("password-input").blur();
+    const loginPage = new LoginPage(page);
+    await loginPage.passwordInput.fill(tooShortPassword);
+    await loginPage.passwordInput.blur();
 
     //Assert
-    await expect(page.getByTestId("error-login-password")).toHaveText(
+    await expect(loginPage.passwordError).toHaveText(
       expectedTooShortPasswordMessage
     );
   });
