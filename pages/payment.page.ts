@@ -7,7 +7,4 @@ export class PaymentPage {
   transferAccount = this.page.getByTestId("form_account_to");
   transferAmount = this.page.getByTestId("form_amount");
   executeButton = this.page.locator("#execute_btn");
-  closeButton = this.page.getByTestId("close-button");
-
-  messageText = this.page.getByTestId("message-text");
 }

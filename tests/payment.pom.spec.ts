@@ -32,9 +32,11 @@ test.describe("Demobank Payment", () => {
     await paymentPage.transferAccount.fill(transferAccount);
     await paymentPage.transferAmount.fill(transferAmount);
     await paymentPage.executeButton.click();
-    await paymentPage.closeButton.click();
+
+    const desktopPage = new DesktopPage(page)
+    await desktopPage.closeButton.click();
 
     //Assert
-    await expect(paymentPage.messageText).toHaveText(transferMessage);
+    await expect(desktopPage.messageText).toHaveText(transferMessage);
   });
 });
