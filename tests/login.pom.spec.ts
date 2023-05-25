@@ -7,7 +7,7 @@ test.describe("Demobank user login page", () => {
     await page.goto("/");
   });
 
-  test.only("successful login with correct credentials", async ({ page }) => {
+  test("successful login with correct credentials", async ({ page }) => {
     //Arrange
     const userId = loginData.userId;
     const userPassword = loginData.userPassword;
@@ -16,10 +16,8 @@ test.describe("Demobank user login page", () => {
     //Act
     const loginPage = new LoginPage(page);
     await loginPage.loginInput.fill(userId);
-
-    // await page.getByTestId("login-input").fill(userId);
-    await page.getByTestId("password-input").fill(userPassword);
-    await page.getByTestId("login-button").click();
+    await loginPage.passwordInput.fill(userPassword);
+    await loginPage.loginButton.click()
 
     //Assert
     await expect(page.getByTestId("user-name")).toHaveText(expectedUserName);
