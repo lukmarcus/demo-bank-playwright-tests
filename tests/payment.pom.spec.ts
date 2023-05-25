@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 import { loginData } from "../test-data/login.data";
 import { LoginPage } from "../pages/login.page";
+import { DesktopPage } from "../pages/desktop.page";
+import { PaymentPage } from "../pages/payment.page";
 
 test.describe("Demobank Payment", () => {
   test.beforeEach(async ({ page }) => {
@@ -13,7 +15,8 @@ test.describe("Demobank Payment", () => {
     await loginPage.passwordInput.fill(userPassword);
     await loginPage.loginButton.click()
 
-    await page.locator("#payments_btn").click();
+    const desktopPage = new DesktopPage(page)
+    await desktopPage.paymentsButton.click();
   });
 
   test("simple payment", async ({ page }) => {
@@ -24,13 +27,14 @@ test.describe("Demobank Payment", () => {
     const transferMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
     //Act
-    await page.getByTestId("transfer_receiver").fill(transferReceiver);
-    await page.getByTestId("form_account_to").fill(transferAccount);
-    await page.getByTestId("form_amount").fill(transferAmount);
-    await page.locator("#execute_btn").click();
-    await page.getByTestId("close-button").click();
+    const paymentPage = new PaymentPage(page)
+    await paymentPage.transferReceiver.fill(transferReceiver);
+    await paymentPage.transferAccount.fill(transferAccount);
+    await paymentPage.transferAmount.fill(transferAmount);
+    await paymentPage.executeButton.click();
+    await paymentPage.closeButton.click();
 
     //Assert
-    await expect(page.getByTestId("message-text")).toHaveText(transferMessage);
+    await expect(paymentPage.messageText).toHaveText(transferMessage);
   });
 });
