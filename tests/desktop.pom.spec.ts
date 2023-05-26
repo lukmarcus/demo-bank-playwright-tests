@@ -3,7 +3,7 @@ import { loginData } from "../test-data/login.data";
 import { LoginPage } from "../pages/login.page";
 import { DesktopPage } from "../pages/desktop.page";
 
-test.describe("Desktop", () => {
+test.describe("Demobank Desktop", () => {
   test.beforeEach(async ({ page }) => {
     const userId = loginData.userId;
     const userPassword = loginData.userPassword;
@@ -35,7 +35,7 @@ test.describe("Desktop", () => {
     await expect(desktopPage.messageText).toHaveText(transferMessage);
   });
 
-  test("successfull mobile top-up", async ({ page }) => {
+  test("successful mobile top-up", async ({ page }) => {
     //Arrange
     const topupReceiver = "500 xxx xxx";
     const topupAmount = "50";

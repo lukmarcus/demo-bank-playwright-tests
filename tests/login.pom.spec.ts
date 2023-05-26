@@ -3,7 +3,7 @@ import { LoginPage } from "../pages/login.page";
 import { loginData } from "../test-data/login.data";
 import { DesktopPage } from "../pages/desktop.page";
 
-test.describe("Demobank user login page", () => {
+test.describe("Demobank Login Page", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
   });
