@@ -26,11 +26,11 @@ test.describe("Demobank Desktop", () => {
     const transferMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
 
     //Act
-    await desktopPage.quickTransferReceiver.selectOption(receiverId);
-    await desktopPage.quickTransferAmount.fill(transferAmount);
-    await desktopPage.quickTransferTitle.fill(transferTitle);
-    await desktopPage.quickExecuteButton.click();
-    await desktopPage.closeButton.click();
+    await desktopPage.makeQuickPayment(
+      receiverId,
+      transferAmount,
+      transferTitle
+    );
 
     //Assert
     await expect(desktopPage.messageText).toHaveText(transferMessage);
@@ -43,11 +43,7 @@ test.describe("Demobank Desktop", () => {
     const topupMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
 
     //Act
-    await desktopPage.topupReceiver.selectOption(topupReceiver);
-    await desktopPage.topupAmount.fill(topupAmount);
-    await desktopPage.topupAgreement.check();
-    await desktopPage.topupExecuteButton.click();
-    await desktopPage.closeButton.click();
+    await desktopPage.makeTopup(topupReceiver, topupAmount);
 
     //Assert
     await expect(desktopPage.messageText).toHaveText(topupMessage);
@@ -61,11 +57,7 @@ test.describe("Demobank Desktop", () => {
     const expectedBalance = Number(initialBalance) - Number(topupAmount);
 
     //Act
-    await desktopPage.topupReceiver.selectOption(topupReceiver);
-    await desktopPage.topupAmount.fill(topupAmount);
-    await desktopPage.topupAgreement.check();
-    await desktopPage.topupExecuteButton.click();
-    await desktopPage.closeButton.click();
+    await desktopPage.makeTopup(topupReceiver, topupAmount);
 
     //Assert
     await expect(desktopPage.moneyValue).toHaveText(`${expectedBalance}`);
