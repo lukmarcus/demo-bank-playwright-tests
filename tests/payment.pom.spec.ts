@@ -29,15 +29,13 @@ test.describe("Demobank Payment", () => {
     const transferMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
     //Act
-    await paymentPage.transferReceiver.fill(transferReceiver);
-    await paymentPage.transferAccount.fill(transferAccount);
-    await paymentPage.transferAmount.fill(transferAmount);
-    await paymentPage.executeButton.click();
-
-    const desktopPage = new DesktopPage(page);
-    await desktopPage.closeButton.click();
+    await paymentPage.makeTransfer(
+      transferReceiver,
+      transferAccount,
+      transferAmount
+    );
 
     //Assert
-    await expect(desktopPage.messageText).toHaveText(transferMessage);
+    await expect(paymentPage.messageText).toHaveText(transferMessage);
   });
 });
