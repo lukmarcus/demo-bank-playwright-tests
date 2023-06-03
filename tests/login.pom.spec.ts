@@ -18,9 +18,7 @@ test.describe("Demobank Login Page", () => {
     const expectedUserName = "Jan Demobankowy";
 
     //Act
-    await loginPage.loginInput.fill(userId);
-    await loginPage.passwordInput.fill(userPassword);
-    await loginPage.loginButton.click();
+    await loginPage.login(userId, userPassword);
 
     //Assert
     const desktopPage = new DesktopPage(page);

@@ -13,9 +13,7 @@ test.describe("Demobank Payment", () => {
 
     await page.goto("/");
     const loginPage = new LoginPage(page);
-    await loginPage.loginInput.fill(userId);
-    await loginPage.passwordInput.fill(userPassword);
-    await loginPage.loginButton.click();
+    await loginPage.login(userId, userPassword);
 
     const desktopPage = new DesktopPage(page);
     await desktopPage.sideMenu.paymentsButton.click();
