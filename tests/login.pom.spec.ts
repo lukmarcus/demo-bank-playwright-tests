@@ -4,8 +4,11 @@ import { loginData } from "../test-data/login.data";
 import { DesktopPage } from "../pages/desktop.page";
 
 test.describe("Demobank Login Page", () => {
+  let loginPage: LoginPage;
+
   test.beforeEach(async ({ page }) => {
     await page.goto("/");
+    loginPage = new LoginPage(page);
   });
 
   test("successful login with correct credentials", async ({ page }) => {
@@ -15,10 +18,9 @@ test.describe("Demobank Login Page", () => {
     const expectedUserName = "Jan Demobankowy";
 
     //Act
-    const loginPage = new LoginPage(page);
     await loginPage.loginInput.fill(userId);
     await loginPage.passwordInput.fill(userPassword);
-    await loginPage.loginButton.click()
+    await loginPage.loginButton.click();
 
     //Assert
     const desktopPage = new DesktopPage(page);
@@ -31,7 +33,6 @@ test.describe("Demobank Login Page", () => {
     const expectedTooShortUserIdMessage = "identyfikator ma min. 8 znaków";
 
     //Act
-    const loginPage = new LoginPage(page);
     await loginPage.loginInput.fill(tooShortId);
     await loginPage.loginInput.blur();
 
@@ -47,7 +48,6 @@ test.describe("Demobank Login Page", () => {
     const expectedTooShortPasswordMessage = "hasło ma min. 8 znaków";
 
     //Act
-    const loginPage = new LoginPage(page);
     await loginPage.passwordInput.fill(tooShortPassword);
     await loginPage.passwordInput.blur();
 

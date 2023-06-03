@@ -5,6 +5,8 @@ import { DesktopPage } from "../pages/desktop.page";
 import { PaymentPage } from "../pages/payment.page";
 
 test.describe("Demobank Payment", () => {
+  let paymentPage: PaymentPage;
+
   test.beforeEach(async ({ page }) => {
     const userId = loginData.userId;
     const userPassword = loginData.userPassword;
@@ -13,10 +15,12 @@ test.describe("Demobank Payment", () => {
     const loginPage = new LoginPage(page);
     await loginPage.loginInput.fill(userId);
     await loginPage.passwordInput.fill(userPassword);
-    await loginPage.loginButton.click()
+    await loginPage.loginButton.click();
 
-    const desktopPage = new DesktopPage(page)
+    const desktopPage = new DesktopPage(page);
     await desktopPage.sideMenu.paymentsButton.click();
+
+    paymentPage = new PaymentPage(page);
   });
 
   test("simple payment", async ({ page }) => {
@@ -27,13 +31,12 @@ test.describe("Demobank Payment", () => {
     const transferMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
     //Act
-    const paymentPage = new PaymentPage(page)
     await paymentPage.transferReceiver.fill(transferReceiver);
     await paymentPage.transferAccount.fill(transferAccount);
     await paymentPage.transferAmount.fill(transferAmount);
     await paymentPage.executeButton.click();
 
-    const desktopPage = new DesktopPage(page)
+    const desktopPage = new DesktopPage(page);
     await desktopPage.closeButton.click();
 
     //Assert
