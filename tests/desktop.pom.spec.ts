@@ -33,6 +33,7 @@ test.describe("Demobank Desktop", () => {
     );
 
     //Assert
+    await page.waitForLoadState("domcontentloaded");
     await expect(desktopPage.messageText).toHaveText(transferMessage);
   });
 

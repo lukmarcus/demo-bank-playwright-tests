@@ -36,6 +36,7 @@ test.describe("Demobank Payment", () => {
     );
 
     //Assert
+    await page.waitForLoadState("domcontentloaded");
     await expect(paymentPage.messageText).toHaveText(transferMessage);
   });
 });
