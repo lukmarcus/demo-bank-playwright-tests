@@ -1,17 +1,24 @@
 import { test, expect } from "@playwright/test";
 import { loginData } from "../test-data/login.data";
+import { LoginPage } from "../pages/login.page";
+import { DesktopPage } from "../pages/desktop.page";
+import { PaymentPage } from "../pages/payment.page";
 
 test.describe("Demobank Payment", () => {
+  let paymentPage: PaymentPage;
+
   test.beforeEach(async ({ page }) => {
     const userId = loginData.userId;
     const userPassword = loginData.userPassword;
 
     await page.goto("/");
-    await page.getByTestId("login-input").fill(userId);
-    await page.getByTestId("password-input").fill(userPassword);
-    await page.getByTestId("login-button").click();
+    const loginPage = new LoginPage(page);
+    await loginPage.login(userId, userPassword);
 
-    await page.locator("#payments_btn").click();
+    const desktopPage = new DesktopPage(page);
+    await desktopPage.sideMenu.paymentsButton.click();
+
+    paymentPage = new PaymentPage(page);
   });
 
   test("simple payment", async ({ page }) => {
@@ -22,13 +29,14 @@ test.describe("Demobank Payment", () => {
     const transferMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
     //Act
-    await page.getByTestId("transfer_receiver").fill(transferReceiver);
-    await page.getByTestId("form_account_to").fill(transferAccount);
-    await page.getByTestId("form_amount").fill(transferAmount);
-    await page.locator("#execute_btn").click();
-    await page.getByTestId("close-button").click();
+    await paymentPage.makeTransfer(
+      transferReceiver,
+      transferAccount,
+      transferAmount
+    );
 
     //Assert
-    await expect(page.getByTestId("message-text")).toHaveText(transferMessage);
+    await page.waitForLoadState("domcontentloaded");
+    await expect(paymentPage.messageText).toHaveText(transferMessage);
   });
 });
