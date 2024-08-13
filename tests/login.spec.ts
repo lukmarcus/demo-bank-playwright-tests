@@ -36,7 +36,7 @@ test.describe("Demobank Login Page", () => {
 
     //Assert
     await expect(loginPage.loginError).toHaveText(
-      expectedTooShortUserIdMessage
+      expectedTooShortUserIdMessage,
     );
   });
 
@@ -51,7 +51,7 @@ test.describe("Demobank Login Page", () => {
 
     //Assert
     await expect(loginPage.passwordError).toHaveText(
-      expectedTooShortPasswordMessage
+      expectedTooShortPasswordMessage,
     );
   });
 });

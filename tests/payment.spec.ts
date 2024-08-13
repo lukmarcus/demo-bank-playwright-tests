@@ -32,7 +32,7 @@ test.describe("Demobank Payment", () => {
     await paymentPage.makeTransfer(
       transferReceiver,
       transferAccount,
-      transferAmount
+      transferAmount,
     );
 
     //Assert

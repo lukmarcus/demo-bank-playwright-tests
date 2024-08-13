@@ -1,7 +1,7 @@
 import { Page } from "@playwright/test";
 
 export class SideMenuComponent {
-    constructor(private page: Page) {}
+  constructor(private page: Page) {}
 
-    paymentsButton = this.page.locator("#payments_btn");
-} 
+  paymentsButton = this.page.locator("#payments_btn");
+}

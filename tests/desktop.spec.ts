@@ -29,7 +29,7 @@ test.describe("Demobank Desktop", () => {
     await desktopPage.makeQuickPayment(
       receiverId,
       transferAmount,
-      transferTitle
+      transferTitle,
     );
 
     //Assert
@@ -44,7 +44,7 @@ test.describe("Demobank Desktop", () => {
     const topupMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
 
     //Act
-    await desktopPage.makeTopup(topupReceiver, topupAmount);
+    await desktopPage.makeMobileTopup(topupReceiver, topupAmount);
 
     //Assert
     await expect(desktopPage.messageText).toHaveText(topupMessage);
@@ -58,7 +58,7 @@ test.describe("Demobank Desktop", () => {
     const expectedBalance = Number(initialBalance) - Number(topupAmount);
 
     //Act
-    await desktopPage.makeTopup(topupReceiver, topupAmount);
+    await desktopPage.makeMobileTopup(topupReceiver, topupAmount);
 
     //Assert
     await expect(desktopPage.moneyValue).toHaveText(`${expectedBalance}`);

@@ -18,7 +18,7 @@ export class PaymentPage {
   async makeTransfer(
     transferReceiver: string,
     transferAccount: string,
-    transferAmount: string
+    transferAmount: string,
   ): Promise<void> {
     await this.transferReceiver.fill(transferReceiver);
     await this.transferAccount.fill(transferAccount);
