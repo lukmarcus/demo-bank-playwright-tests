@@ -17,7 +17,9 @@ test.describe("Demobank Desktop", () => {
     desktopPage = new DesktopPage(page);
   });
 
-  test("quick payment with correct data", async ({ page }) => {
+  test("quick payment with correct data @desktop @integration", async ({
+    page,
+  }) => {
     //Arrange
     const receiverId = "2";
     const transferAmount = "120";
@@ -29,7 +31,7 @@ test.describe("Demobank Desktop", () => {
     await desktopPage.makeQuickPayment(
       receiverId,
       transferAmount,
-      transferTitle,
+      transferTitle
     );
 
     //Assert
@@ -37,7 +39,7 @@ test.describe("Demobank Desktop", () => {
     await expect(desktopPage.messageText).toHaveText(transferMessage);
   });
 
-  test("successful mobile top-up", async ({ page }) => {
+  test("successful mobile top-up @desktop @integration", async ({ page }) => {
     //Arrange
     const topupReceiver = "500 xxx xxx";
     const topupAmount = "50";
@@ -50,7 +52,9 @@ test.describe("Demobank Desktop", () => {
     await expect(desktopPage.messageText).toHaveText(topupMessage);
   });
 
-  test("correct balance after successful mobile top-up", async ({ page }) => {
+  test("correct balance after successful mobile top-up @desktop @integration", async ({
+    page,
+  }) => {
     //Arrange
     const topupReceiver = "500 xxx xxx";
     const topupAmount = "50";

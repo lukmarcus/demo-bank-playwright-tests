@@ -11,7 +11,9 @@ test.describe("Demobank Login Page", () => {
     loginPage = new LoginPage(page);
   });
 
-  test("successful login with correct credentials", async ({ page }) => {
+  test("successful login with correct credentials @login @smoke", async ({
+    page,
+  }) => {
     //Arrange
     const userId = loginData.userId;
     const userPassword = loginData.userPassword;
@@ -25,7 +27,9 @@ test.describe("Demobank Login Page", () => {
     await expect(desktopPage.userName).toHaveText(expectedUserName);
   });
 
-  test("unsuccessful login with too short username", async ({ page }) => {
+  test("unsuccessful login with too short username @login", async ({
+    page,
+  }) => {
     //Arrange
     const tooShortId = "user";
     const expectedTooShortUserIdMessage = "identyfikator ma min. 8 znaków";
@@ -36,11 +40,13 @@ test.describe("Demobank Login Page", () => {
 
     //Assert
     await expect(loginPage.loginError).toHaveText(
-      expectedTooShortUserIdMessage,
+      expectedTooShortUserIdMessage
     );
   });
 
-  test("unsuccessful login with too short password", async ({ page }) => {
+  test("unsuccessful login with too short password @login", async ({
+    page,
+  }) => {
     //Arrange
     const tooShortPassword = "pass";
     const expectedTooShortPasswordMessage = "hasło ma min. 8 znaków";
@@ -51,7 +57,7 @@ test.describe("Demobank Login Page", () => {
 
     //Assert
     await expect(loginPage.passwordError).toHaveText(
-      expectedTooShortPasswordMessage,
+      expectedTooShortPasswordMessage
     );
   });
 });
