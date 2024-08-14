@@ -21,22 +21,32 @@ test.describe("Demobank Payment", () => {
     paymentPage = new PaymentPage(page);
   });
 
-  test("simple payment @payment @integration", async ({ page }) => {
-    //Arrange
-    const transferReceiver = "Jan Nowak";
-    const transferAccount = "12 3456 7890 1234 5678 9012 34567";
-    const transferAmount = "222";
-    const transferMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
+  test(
+    "simple payment",
+    {
+      tag: ["@payment", "@integration"],
+      annotation: {
+        type: "Documentation",
+        description: "https://jaktestowac.pl/lesson/pw1s04l04/",
+      },
+    },
+    async ({ page }) => {
+      //Arrange
+      const transferReceiver = "Jan Nowak";
+      const transferAccount = "12 3456 7890 1234 5678 9012 34567";
+      const transferAmount = "222";
+      const transferMessage = `Przelew wykonany! ${transferAmount},00PLN dla ${transferReceiver}`;
 
-    //Act
-    await paymentPage.makeTransfer(
-      transferReceiver,
-      transferAccount,
-      transferAmount
-    );
+      //Act
+      await paymentPage.makeTransfer(
+        transferReceiver,
+        transferAccount,
+        transferAmount
+      );
 
-    //Assert
-    await page.waitForLoadState("domcontentloaded");
-    await expect(paymentPage.messageText).toHaveText(transferMessage);
-  });
+      //Assert
+      await page.waitForLoadState("domcontentloaded");
+      await expect(paymentPage.messageText).toHaveText(transferMessage);
+    }
+  );
 });

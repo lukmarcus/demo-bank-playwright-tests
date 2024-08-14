@@ -27,7 +27,7 @@ export class DesktopPage {
   async makeQuickPayment(
     receiverId: string,
     transferAmount: string,
-    transferTitle: string,
+    transferTitle: string
   ): Promise<void> {
     await this.quickTransferReceiver.selectOption(receiverId);
     await this.quickTransferAmount.fill(transferAmount);
@@ -38,7 +38,7 @@ export class DesktopPage {
 
   async makeMobileTopup(
     topupReceiver: string,
-    topupAmount: string,
+    topupAmount: string
   ): Promise<void> {
     await this.topupReceiver.selectOption(topupReceiver);
     await this.topupAmount.fill(topupAmount);

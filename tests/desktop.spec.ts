@@ -17,54 +17,68 @@ test.describe("Demobank Desktop", () => {
     desktopPage = new DesktopPage(page);
   });
 
-  test("quick payment with correct data @desktop @integration", async ({
-    page,
-  }) => {
-    //Arrange
-    const receiverId = "2";
-    const transferAmount = "120";
-    const transferTitle = "Zwrot środków";
-    const expectedTransferReceiver = "Chuck Demobankowy";
-    const transferMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
+  test(
+    "quick payment with correct data",
+    {
+      tag: ["@desktop", "@integration"],
+      annotation: {
+        type: "Documentation",
+        description: "https://jaktestowac.pl/course/playwright-wprowadzenie/",
+      },
+    },
+    async ({ page }) => {
+      //Arrange
+      const receiverId = "2";
+      const transferAmount = "120";
+      const transferTitle = "Zwrot środków";
+      const expectedTransferReceiver = "Chuck Demobankowy";
+      const transferMessage = `Przelew wykonany! ${expectedTransferReceiver} - ${transferAmount},00PLN - ${transferTitle}`;
 
-    //Act
-    await desktopPage.makeQuickPayment(
-      receiverId,
-      transferAmount,
-      transferTitle
-    );
+      //Act
+      await desktopPage.makeQuickPayment(
+        receiverId,
+        transferAmount,
+        transferTitle
+      );
 
-    //Assert
-    await page.waitForLoadState("domcontentloaded");
-    await expect(desktopPage.messageText).toHaveText(transferMessage);
-  });
+      //Assert
+      await page.waitForLoadState("domcontentloaded");
+      await expect(desktopPage.messageText).toHaveText(transferMessage);
+    }
+  );
 
-  test("successful mobile top-up @desktop @integration", async ({ page }) => {
-    //Arrange
-    const topupReceiver = "500 xxx xxx";
-    const topupAmount = "50";
-    const topupMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
+  test(
+    "successful mobile top-up",
+    { tag: ["@desktop", "@integration"] },
+    async ({ page }) => {
+      //Arrange
+      const topupReceiver = "500 xxx xxx";
+      const topupAmount = "50";
+      const topupMessage = `Doładowanie wykonane! ${topupAmount},00PLN na numer ${topupReceiver}`;
 
-    //Act
-    await desktopPage.makeMobileTopup(topupReceiver, topupAmount);
+      //Act
+      await desktopPage.makeMobileTopup(topupReceiver, topupAmount);
 
-    //Assert
-    await expect(desktopPage.messageText).toHaveText(topupMessage);
-  });
+      //Assert
+      await expect(desktopPage.messageText).toHaveText(topupMessage);
+    }
+  );
 
-  test("correct balance after successful mobile top-up @desktop @integration", async ({
-    page,
-  }) => {
-    //Arrange
-    const topupReceiver = "500 xxx xxx";
-    const topupAmount = "50";
-    const initialBalance = await desktopPage.moneyValue.innerText();
-    const expectedBalance = Number(initialBalance) - Number(topupAmount);
+  test(
+    "correct balance after successful mobile top-up",
+    { tag: ["@desktop", "@integration"] },
+    async ({ page }) => {
+      //Arrange
+      const topupReceiver = "500 xxx xxx";
+      const topupAmount = "50";
+      const initialBalance = await desktopPage.moneyValue.innerText();
+      const expectedBalance = Number(initialBalance) - Number(topupAmount);
 
-    //Act
-    await desktopPage.makeMobileTopup(topupReceiver, topupAmount);
+      //Act
+      await desktopPage.makeMobileTopup(topupReceiver, topupAmount);
 
-    //Assert
-    await expect(desktopPage.moneyValue).toHaveText(`${expectedBalance}`);
-  });
+      //Assert
+      await expect(desktopPage.moneyValue).toHaveText(`${expectedBalance}`);
+    }
+  );
 });
